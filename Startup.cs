@@ -32,7 +32,7 @@ namespace TareasAPI
             services.AddControllers();
             //Agrega el contexto de base de datos para el contenedor de DI.
             services.AddDbContext<TodoContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("TareasApiContext")));
+                options.UseSqlServer(Configuration.GetConnectionString("TareasAPIContext")));
             //services.AddSwaggerGen(c =>
             //{
             //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "TareasAPI", Version = "v1" });

@@ -12,24 +12,29 @@ Lo que se ha realizado es:
 2. Crear el modelo de datos en código, en este caso se define una única entidad que serían las tareas en una clase llamada TodoItem. Importante respetar nombre del campo identidad Id.
 3. Se crea el DbContext, que será una clase que heredando de DbContext incluirá un DbSet para la entidad TodoItem. El contexto será lo que maneje como un envoltorio
 el acceso a la base de datos, y que luego será gestionado por un servicio inyector de dependencias.
-4. Desde el administrador de paquetes NuGet del proyecto, buscamos e instalamos el EntityFramework.SqlServer (ya que vamos a usar un SQL Server como servidor de base de datos)
+4. Desde el administrador de paquetes NuGet del proyecto, buscamos e instalamos el EntityFramework.SqlServer (ya que vamos a usar un SQL Server como servidor de base de datos) y el EntityFramework.Tools. 
+Cada uno de ellos habrá que instalarlos eligiendo la versión compatible con el .NET que tengamos, en nuestro caso no pasaremos de la 5.0.x.
 5. Se realizan una serie de cambios en el archivo Startup.cs (esto es diferente en ASP.NET 6.0, ver tutorial) para comentar la parte de swagger y registrar el contexto de base de datos en 
 el servicio contenedor de inyección de dependencias. (Ver código subido)
-6. Hacemos scaffolding para generar automáticamente una serie de métodos de la API para manejar un CRUD para la entidad indicada, en el caso será para TodoItem
 
-En este punto ya sólo nos quedará crear la base de datos usando el modelo creado, para luego probar la API usando Postman.
-
-Para llevar nuestro modelo a una base de datos SQL Server, Visual Studio tiene unas herramientas de migración (si la base de datos ya existe no tiene sentido usarlas tal cual,
+En este momento debemos pararnos para llevar nuestro modelo a una base de datos SQL Server, Visual Studio tiene unas herramientas de migración (si la base de datos ya existe no tiene sentido usarlas tal cual,
 hay que estudiar el caso). Vamos a:
-1. Crear la cadena de conexion: 
-Si abrimos la consola del gestión de paquetes del proyecto y ejecutamos las siguientes instrucciones:
+1. Crear la cadena de conexion (ver appsettings.json en el proyecto subido), pondremos nuestro servidor y nombre de la base de datos que queramos.
+2. Abrimos la consola de gestión de paquetes del proyecto y ejecutamos las siguientes instrucciones:
 
-7. Add-Migration InitialCreate
-Update-Database
-Aquí, en el paso Add a Model, veréis el paso que os comento: https://docs.microsoft.com/en-us/aspnet/core/tutorials/razor-pages/model?view=aspnetcore-5.0&tabs=visual-studio
+		Add-Migration InitialCreate
+		Update-Database
 
+Si ahora abrimos el SQL Management Studio podemos ver nuestra base de datos creada, con la tabla Todoitems.
 
+Para crear los métodos de la API (GET/POST/PUT...):
+6. Hacemos scaffolding para generar automáticamente los métodos de la API para manejar un CRUD para la entidad indicada, en 
+este caso será para TodoItem, y sabremos que lo que estamos creando es un "controller" para esta entidad.
+(ver tutorial para saber como hacer scaffold, puede que de algun error instalando dependencias, simplemente internar de nuevo).
+Observar dentro de Controller el nuevo archivo generado. El tutorial nos propone además un cambio en el método Post, lo hacemos.
 
+En este punto ya sólo nos quedará probar la API usando Postman. Seguir las instrucciones de instalación, iniciar el proyecto y 
+probar la API (con POST introduciremos una o dos tareas, con GET las veremos, etc...)
 
 Tecnologías de acceso a datos vistas: EntityFramework, Code First, API REST y herramienta Postman.
 Otras interesantes: Swagger, estándar OpenAPI. Inyección de Dependencias. Método scaffolding.
